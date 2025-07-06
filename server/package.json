@@ -1,22 +1,19 @@
 {
-  "name": "server",
+  "name": "jessicas-med-tracker",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/index.js",
+    "build": "npm run build -w client",
+    "postinstall": "npm install -w client"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "workspaces": [
+    "client"
+  ],
   "dependencies": {
     "cors": "^2.8.5",
-    "date-fns": "^4.1.0",
-    "date-fns-tz": "^3.2.0",
     "dotenv": "^17.0.1",
-    "express": "^5.1.0",
-    "mongoose": "^8.16.1",
-    "twilio": "^5.7.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.0.5"
   }
 }
