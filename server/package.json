@@ -4,12 +4,8 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "build": "npm run build -w client",
-    "postinstall": "npm install -w client"
+    "build": "cd client && npm install && npm run build && cd .."
   },
-  "workspaces": [
-    "client"
-  ],
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.0.1",
