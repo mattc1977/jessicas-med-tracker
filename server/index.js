@@ -30,15 +30,13 @@ const distPath = path.join(__dirname, '../client/dist');
 console.log('[STARTUP] DIST PATH:', distPath, 'Exists?', fs.existsSync(distPath));
 
 // --- API Endpoints ---
-// (your routes here, unchanged for brevity)
-
 app.get('/api/medications', async (req, res) => {
   try {
     res.json({ success: true, data: await Medication.find() });
   } catch (err) { res.status(500).json({ success: false, error: err.message }); }
 });
 
-// ... other API endpoints ...
+// ... other API endpoints unchanged ...
 
 // --- Static serving for production ---
 if (process.env.NODE_ENV === 'production') {
