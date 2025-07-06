@@ -1,5 +1,7 @@
 import PainManager from '../components/PainManager';
-import { differenceInCalendarDays, format } from 'date-fns';
+import DailyLog from '../components/DailyLog';
+import { differenceInCalendarDays } from 'date-fns';
+import useAppStore from '../store/useAppStore';
 import './HomePage.css';
 
 // A simple array of quotes
@@ -12,12 +14,12 @@ const quotes = [
 ];
 
 function HomePage() {
-  // Get surgery date from your input
+  // Get the log and the data refresh function from the global store
+  const { log, fetchData } = useAppStore((state) => state);
+
   const surgeryDate = new Date('2025-07-03T08:00:00');
   const today = new Date();
   const postOpDay = differenceInCalendarDays(today, surgeryDate);
-
-  // Select a quote that changes daily
   const quoteIndex = today.getDate() % quotes.length;
   const dailyQuote = quotes[quoteIndex];
 
@@ -28,7 +30,12 @@ function HomePage() {
         <p className="post-op-day">Today is Post-Op Day: <strong>{postOpDay}</strong></p>
         <p className="quote"><em>"{dailyQuote}"</em></p>
       </div>
-      <PainManager />
+      
+      {/* Pass the refresh function down to the PainManager */}
+      <PainManager onDataRefresh={fetchData} />
+      
+      {/* Pass the log data and the refresh function down to the DailyLog */}
+      <DailyLog log={log} onDataRefresh={fetchData} />
     </div>
   );
 }

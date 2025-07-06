@@ -15,7 +15,12 @@ const Caregiver = require('./models/caregiverModel.js');
 connectDB();
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: 'https://jessicas-med-tracker.onrender.com', // Your live frontend URL
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // --- API Endpoints ---
