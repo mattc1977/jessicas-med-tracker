@@ -21,7 +21,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 // --- API Endpoints ---
 app.get('/api/medications', async (req, res) => res.json(await Medication.find()));
 app.get('/api/log', async (req, res) => res.json(await Log.find()));
@@ -79,7 +78,6 @@ app.post('/api/log-event', async (req, res) => {
     res.status(201).json(newLogEntry);
 });
 
-// THIS IS THE CORRECTED DELETE ROUTE
 app.delete('/api/log-event/:uniqueId', async (req, res) => {
     const { uniqueId } = req.params;
     const deletedEvent = await Log.findOneAndDelete({ uniqueId: uniqueId });
@@ -114,8 +112,7 @@ app.post('/api/refills/received', async (req, res) => {
     res.json(med);
 });
 
-
-// --- Production Deployment Configuration ---
+// This block MUST be after all other API routes
 if (process.env.NODE_ENV === 'production') {
     const __dirname = path.resolve();
     app.use(express.static(path.join(__dirname, '/client/dist')));
@@ -123,8 +120,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
     );
 }
-// --- End Production Configuration ---
-
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
