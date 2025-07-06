@@ -21,7 +21,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 // --- API Endpoints ---
 app.get('/api/medications', async (req, res) => {
     try {
@@ -143,7 +142,7 @@ app.post('/api/refills/received', async (req, res) => {
 
 // This block MUST be after all other API routes
 if (process.env.NODE_ENV === 'production') {
-    const __dirname = path.resolve();
+    // Use the built-in __dirname; do not redefine it!
     app.use(express.static(path.join(__dirname, '/client/dist')));
     app.get('*', (req, res) =>
         res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
