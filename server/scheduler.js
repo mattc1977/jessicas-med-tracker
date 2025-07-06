@@ -5,9 +5,7 @@ const timeZone = 'America/New_York';
 
 function generateSchedule(medications, log) {
   const schedule = [];
-  if (!medications || !log) {
-    return schedule;
-  }
+  if (!medications || !log) return schedule;
 
   const scheduledMeds = medications.filter(m => m.schedule_type === 'scheduled');
   const now = utcToZonedTime(new Date(), timeZone);
