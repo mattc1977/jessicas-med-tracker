@@ -1,0 +1,33 @@
+.manual-entry-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form-group label {
+  font-weight: bold;
+}
+.form-group input, .form-group select {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.manual-entry-container button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

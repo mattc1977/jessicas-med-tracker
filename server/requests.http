@@ -1,0 +1,35 @@
+### 1. Report severe pain (Pain = 8)
+# We should get a recommendation for Hydromorphone
+POST http://localhost:3000/api/report-pain
+Content-Type: application/json
+
+{
+  "painLevel": 8
+}
+
+###
+### 2. Log that Hydromorphone was taken
+# The app would do this after Jessica confirms she took the pills.
+POST http://localhost:3000/api/log-event
+Content-Type: application/json
+
+{
+  "type": "MEDICATION_TAKEN",
+  "medicationId": "med-3",
+  "pillsTaken": 2
+}
+
+###
+### 3. Check the log to see our entry
+GET http://localhost:3000/api/log
+
+
+###
+### 4. Report severe pain AGAIN (too soon)
+# This time, we should get a WARNING message.
+POST http://localhost:3000/api/report-pain
+Content-Type: application/json
+
+{
+  "painLevel": 8
+}

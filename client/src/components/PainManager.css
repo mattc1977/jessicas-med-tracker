@@ -1,0 +1,52 @@
+.pain-manager-container {
+  font-family: sans-serif;
+  width: 100%;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.pain-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.pain-slider {
+  width: 100%;
+}
+
+.recommendation-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f0f8ff;
+  border-radius: 5px;
+}
+
+.recommendation-section .warning {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.log-prn-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.log-prn-button:hover {
+  background-color: #0056b3;
+}
+
+.logged-feedback {
+  color: #28a745;
+  font-weight: bold;
+}

@@ -1,0 +1,64 @@
+.activity-logger-container {
+  font-family: sans-serif;
+  width: 100%;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.activity-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 25px;
+}
+.activity-section:last-child {
+  border-bottom: none;
+}
+
+.activity-section label {
+  font-weight: bold;
+  color: #333;
+}
+.activity-section input[type="range"],
+.activity-section input[type="number"] {
+  width: 100%;
+}
+.activity-section button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.activity-section button:hover {
+  background-color: #5a6268;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+.button-group button {
+  flex: 1;
+}
+
+.tip {
+  color: #007bff;
+}
+
+.feedback-message {
+  text-align: center;
+  font-weight: bold;
+  color: #28a745;
+  margin-top: 10px;
+}
+

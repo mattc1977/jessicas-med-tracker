@@ -1,0 +1,46 @@
+.contacts-container {
+   font-family: sans-serif;
+   width: 100%;
+   max-width: 500px;
+   margin: 40px auto;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+ }
+
+ .contacts-list {
+   list-style-type: none;
+   padding: 0;
+ }
+
+ .contacts-list li {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 12px 0;
+   border-bottom: 1px solid #eee;
+ }
+
+ .phone-button {
+   display: inline-block;
+   background-color: #007bff;
+   color: white;
+   padding: 8px 16px;
+   text-decoration: none;
+   border-radius: 5px;
+   font-weight: bold;
+ }
+ .contact-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-name {
+  font-weight: bold;
+}
+
+.contact-instruction {
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 4px;
+}

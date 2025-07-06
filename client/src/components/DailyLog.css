@@ -1,0 +1,87 @@
+.daily-log-container {
+  font-family: sans-serif;
+  width: 100%;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.log-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.log-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.log-time {
+  font-weight: bold;
+  width: 100px;
+  color: #555;
+}
+
+.log-entry {
+  flex-grow: 1;
+}
+/* Add these to DailyLog.css */
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.date-picker {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.no-events {
+  color: #777;
+  text-align: center;
+  padding: 20px !important; /* Use !important to override border */
+  border-bottom: none !important;
+}
+.delete-button {
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center;   /* Vertically center */
+  flex-shrink: 0;      /* Prevent the button from shrinking */
+
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 15px;
+}
+.date-range-picker {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.date-range-picker div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.date-range-picker label {
+  font-size: 0.9em;
+  color: #555;
+}

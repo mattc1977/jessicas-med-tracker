@@ -1,0 +1,18 @@
+.homepage-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.welcome-card {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* The rest of the old CSS rules... */
+.welcome-card h2 { margin-top: 0; }
+.post-op-day { font-size: 1.2em; color: #495057; }
+.quote { font-size: 1em; color: #6c757d; margin-top: 15px; }

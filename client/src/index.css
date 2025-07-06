@@ -1,0 +1,22 @@
+/* Set a consistent base for the entire app */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f7f6; /* A neutral, light gray background */
+}
+
+/* Ensure the root container doesn't try to center content */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: block; /* Override any grid or flex centering */
+}
+
+/* A simple reset for common elements */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+}

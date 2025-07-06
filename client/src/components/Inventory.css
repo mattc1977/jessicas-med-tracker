@@ -1,0 +1,36 @@
+.inventory-container {
+  font-family: sans-serif;
+  width: 100%;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.inventory-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.inventory-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+.inventory-list li:last-child {
+  border-bottom: none;
+}
+
+.inventory-list li.warning .med-quantity {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.refill-alert {
+  margin-left: 5px;
+}
+.update-group { display: flex; gap: 5px; }
+.update-group input { width: 80px; padding: 5px; }
+.update-group button { background-color: #17a2b8; color: white; border: none; border-radius: 5px; cursor: pointer; }
