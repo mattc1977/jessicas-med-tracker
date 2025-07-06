@@ -1,5 +1,5 @@
-const { addHours, set, isAfter, startOfDay } = require('date-fns');
-const { utcToZonedTime } = require('date-fns-tz');
+const { addHours, set, isAfter, startOfDay, subHours } = require('date-fns');
+const { utcToZonedTime } = require('date-fns-tz'); // This was the missing import
 
 // Set our target time zone
 const timeZone = 'America/New_York';
@@ -25,7 +25,6 @@ function generateSchedule(medications, log) {
           nextDoseTime = addHours(new Date(lastTakenEvent.timestamp), 8);
           isAdjusted = true;
         } else {
-          // Create time slots based on the correct "today"
           const slots = [set(today, { hours: 8 }), set(today, { hours: 16 }), set(today, { hours: 24 })];
           nextDoseTime = slots.find(slot => isAfter(slot, now)) || slots[0];
         }
