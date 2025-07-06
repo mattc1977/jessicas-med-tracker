@@ -28,5 +28,12 @@ function Layout() {
     </div>
   );
 }
+/* This rule only applies to screens 600px wide or smaller */
+@media (max-width: 600px) {
+  .navbar {
+    flex-wrap: wrap; /* Allows the links to wrap to the next line */
+    justify-content: center; /* Center the links when they wrap */
+  }
+}
 
 export default Layout;
