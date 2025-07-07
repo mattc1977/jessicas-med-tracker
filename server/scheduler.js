@@ -1,3 +1,7 @@
+const dateFnsTz = require('date-fns-tz');
+console.log('date-fns-tz keys:', Object.keys(dateFnsTz));
+const { utcToZonedTime } = dateFnsTz;
+
 const { addHours, set, isAfter, startOfDay, subHours } = require('date-fns');
 const { utcToZonedTime } = require('date-fns-tz');
 
