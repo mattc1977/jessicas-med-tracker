@@ -23,6 +23,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // API Routes
+['get', 'post', 'put', 'delete'].forEach(method => {
+  const orig = app[method];
+  app[method] = function(path, ...rest) {
+    console.log(`Registering ${method.toUpperCase()} route:`, path);
+    return orig.call(this, path, ...rest);
+  };
+});
 app.get('/api/medications', async (req, res) => res.json(await Medication.find()));
 app.get('/api/log', async (req, res) => res.json(await Log.find()));
 app.get('/api/contacts', async (req, res) => res.json(await Contact.find()));
