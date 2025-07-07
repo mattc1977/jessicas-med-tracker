@@ -1,5 +1,8 @@
-const { utcToZonedTime } = require('date-fns-tz');
-const { addHours, set, isAfter, startOfDay, subHours } = require('date-fns');
+const dateFnsTz = require('date-fns-tz');
+// Defensive import to support both CJS and ESM builds of date-fns-tz
+const utcToZonedTime = dateFnsTz.utcToZonedTime || (dateFnsTz.default && dateFnsTz.default.utcToZonedTime);
+
+const { addHours, set, isAfter, startOfDay } = require('date-fns');
 
 const timeZone = 'America/New_York';
 
@@ -15,6 +18,7 @@ function generateSchedule(medications, log) {
     const lastTakenEvent = log
       .filter(e => e.medicationId === med.id)
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
+
     switch (med.frequency) {
       case 'tid': {
         let nextDoseTime;
@@ -41,11 +45,33 @@ function generateSchedule(medications, log) {
         break;
       }
       case 'qd': {
-        // Add your qd logic here
+        // Once daily at 8am
+        const nextDoseTime = isAfter(set(today, { hours: 8 }), now)
+          ? set(today, { hours: 8 })
+          : addHours(set(today, { hours: 8 }), 24);
+        schedule.push({
+          uniqueId: med.id + '@' + nextDoseTime.toISOString(),
+          medicationId: med.id,
+          name: med.name,
+          dose: `${med.dose_mg} mg`,
+          time: nextDoseTime,
+          isAdjusted: false
+        });
         break;
       }
       case 'qpm': {
-        // Add your qpm logic here
+        // Once daily at 8pm
+        const nextDoseTime = isAfter(set(today, { hours: 20 }), now)
+          ? set(today, { hours: 20 })
+          : addHours(set(today, { hours: 20 }), 24);
+        schedule.push({
+          uniqueId: med.id + '@' + nextDoseTime.toISOString(),
+          medicationId: med.id,
+          name: med.name,
+          dose: `${med.dose_mg} mg`,
+          time: nextDoseTime,
+          isAdjusted: false
+        });
         break;
       }
       default:
