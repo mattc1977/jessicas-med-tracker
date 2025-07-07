@@ -1,6 +1,4 @@
-const dateFnsTz = require('date-fns-tz');
-// Defensive import to support both CJS and ESM builds of date-fns-tz
-const utcToZonedTime = dateFnsTz.utcToZonedTime || (dateFnsTz.default && dateFnsTz.default.utcToZonedTime);
+const { utcToZonedTime } = require('date-fns-tz'); // <- canonical import
 
 const { addHours, set, isAfter, startOfDay } = require('date-fns');
 
