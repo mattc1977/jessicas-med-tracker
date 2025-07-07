@@ -28,7 +28,7 @@ function ManualEntryPage() {
     };
 
     setFeedback('Logging...');
-    fetch(`${import.meta.env.VITE_API_URL}/api/log-event', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/log-event`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(logData),
