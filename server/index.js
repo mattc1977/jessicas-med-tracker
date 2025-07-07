@@ -13,7 +13,12 @@ const Caregiver = require('./models/caregiverModel.js');
 
 connectDB();
 const app = express();
-app.use(cors());
+// CORRECT CODE
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // API Routes
