@@ -13,7 +13,7 @@ function PainManager({ onDataRefresh }) {
     setLastLoggedEvent(null);
 
     // The backend will now handle getting the log, simplifying this component
-    fetch('http://localhost:3000/api/report-pain', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/report-pain', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ painLevel: Number(painLevel) }),
@@ -26,7 +26,7 @@ function PainManager({ onDataRefresh }) {
 
   const logPrnDose = () => {
     const pillsToLog = recommendation.pillsToTake || 0;
-    fetch('http://localhost:3000/api/log-event', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/log-event', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -46,7 +46,7 @@ function PainManager({ onDataRefresh }) {
 
   const handleUndoPrnLog = () => {
     if (!lastLoggedEvent || !lastLoggedEvent.uniqueId) return;
-    fetch(`http://localhost:3000/api/log-event/${lastLoggedEvent.uniqueId}`, { method: 'DELETE' })
+    fetch(`${import.meta.env.VITE_API_URL}/api/log-event/${lastLoggedEvent.uniqueId}`, { method: 'DELETE' })
     .then(res => {
       if (!res.ok) throw new Error('Failed to undo event');
       setLastLoggedEvent(null);

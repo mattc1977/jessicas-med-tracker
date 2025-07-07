@@ -14,7 +14,7 @@ function DailyLog({ log, onDataRefresh }) {
 
   const handleDelete = (uniqueId) => {
     if (!window.confirm('Are you sure you want to delete this log entry?')) return;
-    fetch(`http://localhost:3000/api/log-event/${uniqueId}`, { method: 'DELETE' })
+    fetch(`${import.meta.env.VITE_API_URL}/api/log-event/${uniqueId}`, { method: 'DELETE' })
     .then(res => { if (!res.ok) throw new Error('Delete failed'); onDataRefresh(); })
     .catch(console.error);
   };

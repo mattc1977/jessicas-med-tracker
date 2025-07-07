@@ -8,7 +8,7 @@ function RefillList({ onDataRefresh }) {
 
   const fetchRefills = () => {
     // It now fetches its own specialized data again
-    fetch('http://localhost:3000/api/refills')
+    fetch(`${import.meta.env.VITE_API_URL}/api/refills')
       .then(res => res.json())
       .then(data => setRefillMeds(data))
       .catch(console.error);
@@ -20,7 +20,7 @@ function RefillList({ onDataRefresh }) {
   const handleRequestRefill = (med) => {
     if (!window.confirm(`Confirm you are requesting a refill for ${med.name}?`)) return;
 
-    fetch('http://localhost:3000/api/log-event', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/log-event', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'REFILL_REQUESTED', medicationId: med.id, name: med.name, details: `Refill requested for ${med.name}.` }),
@@ -31,7 +31,7 @@ function RefillList({ onDataRefresh }) {
     const quantityReceived = receivedQuantities[medId];
     if (!quantityReceived || isNaN(quantityReceived) || quantityReceived <= 0) return;
 
-    fetch('http://localhost:3000/api/refills/received', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/refills/received', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ medicationId: medId, quantityReceived }),

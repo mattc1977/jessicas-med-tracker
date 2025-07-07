@@ -4,7 +4,7 @@ import './Schedule.css';
 function Schedule({ schedule, log, onDataRefresh }) {
 
   const handleLogAction = (item, isUndo = false) => {
-    const url = `http://localhost:3000/api/log-event/${isUndo ? item.uniqueId : ''}`;
+    const url = `${import.meta.env.VITE_API_URL}/api/log-event/${isUndo ? item.uniqueId : ''}`;
     const method = isUndo ? 'DELETE' : 'POST';
     const body = isUndo ? null : JSON.stringify({
       type: 'SCHEDULED_MED_TAKEN',
