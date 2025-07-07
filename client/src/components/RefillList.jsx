@@ -6,43 +6,59 @@ function RefillList({ onDataRefresh }) {
   const [showConfirm, setShowConfirm] = useState({});
   const [receivedQuantities, setReceivedQuantities] = useState({});
 
-  const fetchRefills = () => {
-    // It now fetches its own specialized data again
-    fetch(`${import.meta.env.VITE_API_URL}/api/refills')
-      .then(res => res.json())
-      .then(data => setRefillMeds(data))
-      .catch(console.error);
+  const fetchRefills = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/refills`);
+      const data = await res.json();
+      setRefillMeds(data);
+    } catch (err) {
+      console.error('Failed to fetch refills:', err);
+    }
   };
 
-  // Fetch when the component loads
-  useEffect(fetchRefills, []);
+  useEffect(() => {
+    fetchRefills();
+  }, []);
 
-  const handleRequestRefill = (med) => {
+  const handleRequestRefill = async (med) => {
     if (!window.confirm(`Confirm you are requesting a refill for ${med.name}?`)) return;
-
-    fetch(`${import.meta.env.VITE_API_URL}/api/log-event', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: 'REFILL_REQUESTED', medicationId: med.id, name: med.name, details: `Refill requested for ${med.name}.` }),
-    }).then(() => onDataRefresh());
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/log-event`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'REFILL_REQUESTED',
+          medicationId: med.id,
+          name: med.name,
+          details: `Refill requested for ${med.name}.`
+        }),
+      });
+      onDataRefresh();
+      fetchRefills();
+    } catch (err) {
+      console.error('Error logging refill request:', err);
+    }
   };
 
-  const handleReceiveRefill = (medId) => {
+  const handleReceiveRefill = async (medId) => {
     const quantityReceived = receivedQuantities[medId];
     if (!quantityReceived || isNaN(quantityReceived) || quantityReceived <= 0) return;
-
-    fetch(`${import.meta.env.VITE_API_URL}/api/refills/received', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ medicationId: medId, quantityReceived }),
-    }).then(() => {
-      setShowConfirm({});
-      fetchRefills(); // Re-fetch its own list
-      onDataRefresh(); // Refresh the rest of the app's data
-    });
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/refills/received`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ medicationId: medId, quantityReceived: Number(quantityReceived) }),
+      });
+      setShowConfirm(prev => ({ ...prev, [medId]: false }));
+      setReceivedQuantities(prev => ({ ...prev, [medId]: '' }));
+      fetchRefills();
+      onDataRefresh();
+    } catch (err) {
+      console.error('Error logging received refill:', err);
+    }
   };
 
-  if (refillMeds.length === 0) {
+  if (!refillMeds.length) {
     return (
       <div className="refill-container all-good">
         <h4>Refill Status</h4>
@@ -56,17 +72,32 @@ function RefillList({ onDataRefresh }) {
       <h4>Refill Reminders</h4>
       {refillMeds.map(med => (
         <div key={med.id} className="refill-item">
-          <p><strong>{med.name}</strong> has only {Math.floor(med.daysOfSupply)} days of supply left. Request refill soon.</p>
-          { showConfirm[med.id] ? (
+          <p>
+            <strong>{med.name}</strong> has only {Math.floor(med.daysOfSupply)} days of supply left. Request refill soon.
+          </p>
+          {showConfirm[med.id] ? (
             <div className="confirm-received-section">
-              <input type="number" placeholder="Qty Received" onChange={e => setReceivedQuantities({ [med.id]: e.target.value })}/>
+              <input
+                type="number"
+                placeholder="Qty Received"
+                value={receivedQuantities[med.id] || ''}
+                onChange={e =>
+                  setReceivedQuantities(prev => ({
+                    ...prev,
+                    [med.id]: e.target.value
+                  }))
+                }
+                min={1}
+              />
               <button onClick={() => handleReceiveRefill(med.id)}>Confirm</button>
-              <button className="cancel-button" onClick={() => setShowConfirm({})}>Cancel</button>
+              <button className="cancel-button" onClick={() => setShowConfirm(prev => ({ ...prev, [med.id]: false }))}>
+                Cancel
+              </button>
             </div>
           ) : (
             <div className="refill-workflow">
               <button onClick={() => handleRequestRefill(med)}>Log Refill Request</button>
-              <button onClick={() => setShowConfirm({ [med.id]: true })}>Log Received Refill</button>
+              <button onClick={() => setShowConfirm(prev => ({ ...prev, [med.id]: true }))}>Log Received Refill</button>
             </div>
           )}
         </div>
