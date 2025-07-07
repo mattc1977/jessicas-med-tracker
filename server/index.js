@@ -11,6 +11,7 @@ const Log = require('./models/logModel.js');
 const Contact = require('./models/contactModel.js');
 const Caregiver = require('./models/caregiverModel.js');
 
+console.log('CORS_ORIGIN:', process.env.CORS_ORIGIN);
 connectDB();
 const app = express();
 // CORRECT CODE
