@@ -12,7 +12,7 @@ function Inventory({ medications, onDataRefresh }) {
     const newQuantity = inputs[medId];
     if (!newQuantity || isNaN(newQuantity)) return;
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/inventory/update', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/inventory/update`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ medicationId: medId, newQuantity: newQuantity }),
