@@ -1,9 +1,5 @@
-const { addHours, set, isAfter, startOfDay, subHours } = require('date-fns');
 const { utcToZonedTime } = require('date-fns-tz');
-
-// Debug: log available keys in date-fns-tz (optional, remove after debugging)
-// const dateFnsTz = require('date-fns-tz');
-// console.log('date-fns-tz keys:', Object.keys(dateFnsTz));
+const { addHours, set, isAfter, startOfDay, subHours } = require('date-fns');
 
 const timeZone = 'America/New_York';
 
