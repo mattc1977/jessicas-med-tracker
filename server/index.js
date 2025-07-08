@@ -1,41 +1,37 @@
+// 1. IMPORTS
 const express = require('express');
-// CORRECT
-const corsOptions = {
-  origin: process.env.CORS_ORIGIN
-};
-
-app.use(cors(corsOptions));
+const cors = require('cors');
 const path = require('path');
 const connectDB = require('./db.js');
 const { generateSchedule } = require('./scheduler.js');
 const { getPrnRecommendation } = require('./prnLogic.js');
 const { sendSms } = require('./smsService.js');
 
+// Import Mongoose Models
 const Medication = require('./models/medicationModel.js');
 const Log = require('./models/logModel.js');
 const Contact = require('./models/contactModel.js');
 const Caregiver = require('./models/caregiverModel.js');
 
-console.log('CORS_ORIGIN:', process.env.CORS_ORIGIN);
-connectDB();
+// 2. INITIALIZATION & DATABASE CONNECTION
 const app = express();
+connectDB();
 
+// 3. MIDDLEWARE
+// For debugging: Confirm the environment variable is being read
+console.log(`CORS Origin intended for use: ${process.env.CORS_ORIGIN}`);
+
+// CORS setup to allow requests from your live frontend
 const corsOptions = {
   origin: process.env.CORS_ORIGIN
 };
 app.use(cors(corsOptions));
+
+// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Route logging proxy for debugging
-['get', 'post', 'put', 'delete'].forEach(method => {
-  const orig = app[method];
-  app[method] = function(path, ...rest) {
-    console.log(`Registering ${method.toUpperCase()} route:`, path);
-    return orig.call(this, path, ...rest);
-  };
-});
 
-// API Routes
+// 4. API ROUTES
 app.get('/api/medications', async (req, res) => res.json(await Medication.find()));
 app.get('/api/log', async (req, res) => res.json(await Log.find()));
 app.get('/api/contacts', async (req, res) => res.json(await Contact.find()));
@@ -126,13 +122,20 @@ app.post('/api/refills/received', async (req, res) => {
   res.json(med);
 });
 
-// Serve static files and handle client-side routing in production
+
+// 5. PRODUCTION STATIC SERVER
+// This block must come *after* all API routes
 if (process.env.NODE_ENV === 'production') {
+  // Serve the static files from the React app
   app.use(express.static(path.join(__dirname, '../client/dist')));
-  app.get(/.*/, (req, res) =>
-    res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'))
-  );
+
+  // Handles any requests that don't match the API routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
+  });
 }
 
+
+// 6. SERVER LISTENER
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
