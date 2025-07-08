@@ -124,12 +124,12 @@ app.post('/api/refills/received', async (req, res) => {
 
 
 // 5. PRODUCTION STATIC SERVER
-// This block must come *after* all API routes
+// This block MUST come *after* all API routes
 if (process.env.NODE_ENV === 'production') {
   // Serve the static files from the React app
   app.use(express.static(path.join(__dirname, '../client/dist')));
 
-  // Handles any requests that don't match the API routes
+  // Handles any requests that don't match the API routes by sending the index.html
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
   });
