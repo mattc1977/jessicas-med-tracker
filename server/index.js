@@ -1,5 +1,10 @@
 const express = require('express');
-const cors = require('cors');
+// CORRECT
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN
+};
+
+app.use(cors(corsOptions));
 const path = require('path');
 const connectDB = require('./db.js');
 const { generateSchedule } = require('./scheduler.js');
